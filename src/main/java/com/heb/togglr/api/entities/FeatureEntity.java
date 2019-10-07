@@ -1,11 +1,15 @@
 package com.heb.togglr.api.entities;
 
+import com.heb.togglr.api.client.model.response.FeatureResponse;
+import com.sun.swing.internal.plaf.basic.resources.basic;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
 import javax.persistence.*;
+
+import java.util.Collection;
+import java.util.Objects;
 
 import com.heb.togglr.api.client.model.response.FeatureResponse;
 
@@ -17,6 +21,7 @@ public class FeatureEntity {
     private Integer appId;
     private Boolean active;
     private Boolean negation;
+    private Integer canaryPct;
     private Collection<ConfigsEntity> configsById;
     private AppEntity appByAppId;
 
@@ -71,6 +76,16 @@ public class FeatureEntity {
         this.negation = negation;
     }
 
+    @Basic
+    @Column(name = "CANARY_PCT")
+    public Integer getCanaryPct() {
+        return canaryPct;
+    }
+
+    public void setCanaryPct(Integer canaryPct) {
+        this.canaryPct = canaryPct;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -80,13 +95,14 @@ public class FeatureEntity {
                 Objects.equals(descr, entity.descr) &&
                 Objects.equals(appId, entity.appId) &&
                 Objects.equals(active, entity.active) &&
-                Objects.equals(negation, entity.negation);
+                Objects.equals(negation, entity.negation) &&
+                Objects.equals(canaryPct, entity.canaryPct);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(id, descr, appId, active, negation);
+        return Objects.hash(id, descr, appId, active, negation, canaryPct);
     }
 
     @OneToMany(mappedBy = "featureByFeatureId", cascade = CascadeType.REMOVE)

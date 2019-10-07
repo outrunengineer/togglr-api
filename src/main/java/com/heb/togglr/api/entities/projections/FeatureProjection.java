@@ -18,5 +18,7 @@ public interface FeatureProjection {
 
     Boolean getNegation();
 
+    int getCanaryPct();
+
     Collection<ConfigsEntity> getConfigsById();
 }
